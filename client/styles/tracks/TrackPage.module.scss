@@ -1,0 +1,38 @@
+.back {
+  font-size: 32px;
+}
+
+.container {
+  margin: 20px 0;
+  h1 {
+    margin-bottom: 0;
+  }
+}
+
+.info {
+  margin-left: 30px;
+}
+
+.wrapper {
+  background: -webkit-linear-gradient(45deg, #09009f, #00ff95 70%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.currentColor {
+  -webkit-text-fill-color: currentColor;
+}
+
+.artist {
+  margin-top: 0;
+  font-size: 15px;
+}
+
+.trackName {
+  font-size: 3em;
+  line-height: 3rem;
+}
+
+.listens {
+  margin: 37px 0 0 0;
+}
