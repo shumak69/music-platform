@@ -3,7 +3,7 @@ import { Pause, PlayArrow, VolumeUp } from "@mui/icons-material";
 import { Grid, IconButton } from "@mui/material";
 import styles from "../styles/Player.module.scss";
 import trackStyle from "../styles/tracks/TrackItem.module.scss";
-import TrackProgressBar from "./trackProgressBar";
+import TrackProgressBar from "./TrackProgressBar";
 function Player() {
   const track: ITrack = {
     _id: "1",
