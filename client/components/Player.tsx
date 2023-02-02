@@ -23,9 +23,9 @@ function Player() {
         <div>{track.name}</div>
         <div className={trackStyle.artist}>{track.artist}</div>
       </Grid>
-      <TrackProgressBar currentTime={0} fullTime={23} onChange={() => {}} />
+      <TrackProgressBar currentTime={0} duration={23} onChange={() => {}} />
       <VolumeUp className={styles.volumeUp} />
-      <TrackProgressBar currentTime={0} fullTime={23} onChange={() => {}} />
+      <TrackProgressBar currentTime={0} duration={23} onChange={() => {}} />
     </div>
   );
 }

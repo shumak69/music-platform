@@ -1,4 +1,5 @@
 import TrackList from "@/components/TrackList";
+import { useTypedSelector } from "@/hooks/useTypedSelector";
 import MainLayout from "@/layouts/MainLayout";
 import { ITrack } from "@/types/track";
 import { Button, Card, Grid } from "@mui/material";
@@ -8,6 +9,7 @@ import React from "react";
 
 function Index() {
   const router = useRouter();
+  const { active } = useTypedSelector((state) => state.player);
   const tracks: ITrack[] = [
     {
       _id: "1",
