@@ -1,27 +1,45 @@
 import MainLayout from "@/layouts/MainLayout";
 import { ITrack } from "@/types/track";
-import { Button, Grid, TextField } from "@mui/material";
+import { Button, Divider, Grid, TextField } from "@mui/material";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import styles from "../../styles/tracks/TrackPage.module.scss";
 import listens from "../../static/image/w26h261390848413visible26.png";
-function TrackPage() {
-  const track: ITrack = {
-    _id: "1",
-    name: "Трек 1",
-    artist: "Artist 1",
-    text: "Some text",
-    listens: 5,
-    audio: "http://localhost:3001/audio/245f49db-4963-4cb6-8522-f72a9e49fd5e.mp3",
-    picture: "http://localhost:3001/image/1d95c1f5-d468-4411-920a-5cf4266c53fa.jpg",
-    comments: [],
-  };
+import { Fragment, useState } from "react";
+import { GetServerSideProps } from "next";
+import axios from "axios";
+import { useInput } from "@/hooks/useInput";
+
+interface TrackPageProps {
+  serverTrack: ITrack;
+}
+
+function TrackPage({ serverTrack }: TrackPageProps) {
+  const [track, setTrack] = useState(serverTrack);
   const router = useRouter();
+  const username = useInput("");
+  const text = useInput("");
+  const addComment = async () => {
+    try {
+      const response = await axios.post("http://localhost:3001/tracks/comment", {
+        username: username.value,
+        text: text.value,
+        trackId: track._id,
+      });
+      setTrack({ ...track, comments: [...track.comments, response.data] });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
-    <MainLayout className={styles.wrapper}>
+    <MainLayout
+      title={track.name + " - " + track.artist}
+      className={styles.wrapper}
+      keywords={"Музыка, артисты, " + track.name + ", " + track.artist}
+    >
       <Grid justifyContent="space-between" container alignItems="center">
         <Grid container className={styles.container} xs={8} item>
-          <img src={track.picture} alt={track.name} width={200} height={200} />
+          <img src={"http://localhost:3001/" + track.picture} alt={track.name} width={200} height={200} />
           <div className={styles.info}>
             <h1 className={styles.trackName}>{track.name}</h1>
             <h2 className={styles.artist}> {track.artist}</h2>
@@ -31,7 +49,7 @@ function TrackPage() {
           </div>
         </Grid>
         <Button
-          onClick={() => router.back()}
+          onClick={() => router.push("/tracks")}
           variant="outlined"
           className={[styles.back, styles.currentColor].join(" ")}
         >
@@ -42,16 +60,19 @@ function TrackPage() {
       <p>{track.text}</p>
       <h1>Комментарии</h1>
       <Grid container className={styles.currentColor}>
-        <TextField label="Ваше имя" fullWidth />
-        <TextField label="Комментарий" fullWidth multiline rows={4} margin="dense" />
-        <Button>Отправить комментарий</Button>
+        <TextField label="Ваше имя" fullWidth {...username} />
+        <TextField label="Комментарий" fullWidth multiline rows={4} margin="dense" {...text} />
+        <Button onClick={addComment}>Отправить комментарий</Button>
       </Grid>
       <div>
-        {track.comments.map((comment) => (
-          <div key={comment._id}>
-            <div>Автор - {comment.username}</div>
-            <div>Комментарий - {comment.text}</div>
-          </div>
+        {track.comments.map((comment, index) => (
+          <Fragment key={comment._id}>
+            {index !== 0 && <Divider orientation="horizontal" />}
+            <div className={styles.comment}>
+              <div className={styles.username}>{comment.username}</div>
+              <div className={styles.text}> {comment.text}</div>
+            </div>
+          </Fragment>
         ))}
       </div>
     </MainLayout>
@@ -59,3 +80,12 @@ function TrackPage() {
 }
 
 export default TrackPage;
+
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  const response = await axios.get<ITrack>("http://localhost:3001/tracks/" + params!.id);
+  return {
+    props: {
+      serverTrack: response.data,
+    },
+  };
+};

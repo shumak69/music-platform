@@ -1,18 +1,26 @@
+import { transformToDate } from "@/utils";
 import { ChangeEvent } from "react";
 
 interface TrackProgressBarProps {
   currentTime: number;
   duration: number;
-  onChange: (e: ChangeEvent) => void;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  audio?: boolean;
 }
 
-function TrackProgressBar({ currentTime, duration, onChange }: TrackProgressBarProps) {
+function TrackProgressBar({ currentTime, duration, onChange, audio }: TrackProgressBarProps) {
   return (
     <div style={{ display: "flex" }}>
-      <input type="range" min={currentTime} max={currentTime} value={currentTime} onChange={onChange} />
-      <div>
-        {currentTime} / {duration}
-      </div>
+      <input type="range" min={0} max={duration} value={currentTime} onChange={onChange} />
+      {audio ? (
+        <div>
+          {transformToDate(currentTime)} / {transformToDate(duration)}
+        </div>
+      ) : (
+        <div>
+          {currentTime} / {duration}
+        </div>
+      )}
     </div>
   );
 }

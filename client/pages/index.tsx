@@ -1,5 +1,4 @@
 import MainLayout from "@/layouts/MainLayout";
-import NavBar from "../components/NavBar";
 import styles from "../styles/index.module.css";
 function Index() {
   return (

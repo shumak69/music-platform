@@ -1,44 +1,51 @@
 import TrackList from "@/components/TrackList";
 import { useTypedSelector } from "@/hooks/useTypedSelector";
 import MainLayout from "@/layouts/MainLayout";
-import { ITrack } from "@/types/track";
-import { Button, Card, Grid } from "@mui/material";
+import { NextThunkDispatch, wrapper } from "@/store";
+import { fetchTracks, searchTracks } from "@/store/action-creators/track";
+import { Search } from "@mui/icons-material";
+import { Button, Card, Grid, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { useRouter } from "next/router";
-import React from "react";
+import { ChangeEvent, useState } from "react";
+import { useDispatch } from "react-redux";
 
 function Index() {
   const router = useRouter();
-  const { active } = useTypedSelector((state) => state.player);
-  const tracks: ITrack[] = [
-    {
-      _id: "1",
-      name: "Трек 1",
-      artist: "Artist 1",
-      text: "Some text",
-      listens: 5,
-      audio: "http://localhost:3001/audio/245f49db-4963-4cb6-8522-f72a9e49fd5e.mp3",
-      picture: "http://localhost:3001/image/1d95c1f5-d468-4411-920a-5cf4266c53fa.jpg",
-      comments: [],
-    },
-    {
-      _id: "2",
-      name: "Трек 1",
-      artist: "Artist 1",
-      text: "Some text",
-      listens: 5,
-      audio: "http://localhost:3001/audio/245f49db-4963-4cb6-8522-f72a9e49fd5e.mp3",
-      picture: "http://localhost:3001/image/1d95c1f5-d468-4411-920a-5cf4266c53fa.jpg",
-      comments: [],
-    },
-  ];
+  const { tracks, error } = useTypedSelector((state) => state.track);
+  const [query, setQuery] = useState("");
+  const dispatch = useDispatch() as NextThunkDispatch;
+  const [timer, setTimer] = useState<null | ReturnType<typeof setTimeout>>(null);
+  const search = async (e: ChangeEvent<HTMLInputElement>) => {
+    setQuery(e.target.value);
+    if (timer) {
+      clearTimeout(timer);
+    }
+    setTimer(
+      setTimeout(async () => {
+        await dispatch(await searchTracks(e.target.value));
+      }, 500)
+    );
+  };
+  if (error) {
+    return (
+      <MainLayout>
+        <h1>{error}</h1>
+      </MainLayout>
+    );
+  }
   return (
-    <MainLayout>
+    <MainLayout title="Список треков">
       <Grid container justifyContent="center">
         <Card style={{ width: 900 }}>
           <Box p={3}>
-            <Grid container justifyContent="space-between">
+            <Grid container justifyContent="space-between" alignItems="center" p={2}>
               <h1>Список треков</h1>
+              {/* <TextField value={query} onChange={search} label="Поиск..." /> */}
+              <Box sx={{ display: "flex", alignItems: "flex-end" }}>
+                <Search sx={{ color: "action.active", mr: 1, my: 0.5 }} />
+                <TextField id="input-with-sx" label="Поиск" variant="standard" value={query} onChange={search} />
+              </Box>
               <Button onClick={() => router.push("/tracks/create")}>Загрузить</Button>
             </Grid>
           </Box>
@@ -50,3 +57,7 @@ function Index() {
 }
 
 export default Index;
+export const getServerSideProps = wrapper.getServerSideProps((store) => async (): Promise<any> => {
+  const dispatch = store.dispatch as NextThunkDispatch;
+  return await dispatch(fetchTracks());
+});

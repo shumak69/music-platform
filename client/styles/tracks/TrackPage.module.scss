@@ -17,6 +17,7 @@
   background: -webkit-linear-gradient(45deg, #09009f, #00ff95 70%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  margin-bottom: 100px;
 }
 
 .currentColor {
@@ -35,4 +36,19 @@
 
 .listens {
   margin: 37px 0 0 0;
+}
+
+.username {
+  margin-left: 0.5em;
+  font-size: 1.5em;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.comment {
+  margin: 20px 0;
+}
+
+.text {
+  overflow-wrap: break-word;
 }

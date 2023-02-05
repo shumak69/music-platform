@@ -8,6 +8,7 @@ interface TrackListProps {
 }
 
 function TrackList({ tracks }: TrackListProps) {
+  console.log(tracks);
   return (
     <Grid container direction="column">
       <Box p={2}>
