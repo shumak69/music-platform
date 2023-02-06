@@ -6,6 +6,7 @@ const initialState: PlayerState = {
   volume: 50,
   duration: 0,
   pause: true,
+  audio: null,
 };
 
 export const playerReducer = (state = initialState, action: PlayerAction): PlayerState => {
@@ -22,7 +23,8 @@ export const playerReducer = (state = initialState, action: PlayerAction): Playe
       return { ...state, duration: action.payload };
     case PlayerActionTypes.SET_VOLUME:
       return { ...state, volume: action.payload };
-
+    case PlayerActionTypes.SET_AUDIO:
+      return { ...state, audio: action.payload };
     default:
       return state;
   }

@@ -8,36 +8,36 @@ import styles from "../styles/Player.module.scss";
 import trackStyle from "../styles/tracks/TrackItem.module.scss";
 import TrackProgressBar from "./TrackProgressBar";
 
-let audio: HTMLAudioElement;
+// let audio: HTMLAudioElement;
 
 function Player() {
-  const { pause, volume, active, currentTime, duration } = useTypedSelector((state) => state.player);
-  const { pauseTrack, playTrack, setVolume, setCurrentTime, setDuration } = useActions();
+  let { pause, volume, active, currentTime, duration, audio } = useTypedSelector((state) => state.player);
+  const { pauseTrack, playTrack, setVolume, setCurrentTime, setDuration, setAudio } = useActions();
 
   useEffect(() => {
-    console.log(document.querySelector("audio"));
-    console.log("audio = ", audio, " active = ", active);
+    // console.log(document.querySelector("audio"));
+    // console.log("audio = ", audio, " active = ", active);
     if (!audio) {
-      audio = new Audio();
+      // audio = new Audio();
+      setAudio(new Audio());
     } else {
-      setAudio();
+      audioSettings();
       play();
     }
   }, [active]);
 
-  function setAudio() {
-    if (active) {
+  function audioSettings() {
+    if (active && audio) {
       audio.src = "http://localhost:3001/" + active.audio;
       audio.volume = volume / 100;
       audio.onloadedmetadata = () => {
-        setDuration(Math.ceil(audio.duration));
+        setDuration(Math.ceil(audio!.duration));
       };
       audio.ontimeupdate = () => {
-        console.log(active._id);
-        if (audio.currentTime >= audio.duration) {
-          axios.post("http://localhost:3001/tracks/listen/" + active._id);
+        if (audio!.currentTime >= audio!.duration) {
+          axios.post("http://localhost:3001/tracks/listen/" + active!._id);
         }
-        setCurrentTime(Math.ceil(audio.currentTime));
+        setCurrentTime(Math.ceil(audio!.currentTime));
         // console.log(audio.currentTime, audio.duration);
       };
     }
@@ -46,21 +46,21 @@ function Player() {
   const play = () => {
     if (pause) {
       playTrack();
-      audio.pause();
+      audio!.pause();
     } else {
       pauseTrack();
-      audio.play();
+      audio!.play();
     }
   };
 
   function changeVolume(e: ChangeEvent<HTMLInputElement>): void {
     setVolume(+e.target.value);
-    audio.volume = +e.target.value / 100;
+    audio!.volume = +e.target.value / 100;
   }
   function changeCurrentTime(e: ChangeEvent<HTMLInputElement>): void {
-    audio.play();
+    audio!.play();
     setCurrentTime(+e.target.value);
-    audio.currentTime = +e.target.value;
+    audio!.currentTime = +e.target.value;
   }
 
   if (!active) {

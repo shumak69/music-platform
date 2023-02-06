@@ -19,3 +19,6 @@ export const setCurrentTime = (payload: number): PlayerAction => {
 export const setActiveTrack = (payload: ITrack): PlayerAction => {
   return { type: PlayerActionTypes.SET_ACTIVE, payload };
 };
+export const setAudio = (payload: HTMLAudioElement): PlayerAction => {
+  return { type: PlayerActionTypes.SET_AUDIO, payload };
+};
