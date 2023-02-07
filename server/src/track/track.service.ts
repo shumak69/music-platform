@@ -7,6 +7,12 @@ import { CreateTrackDto } from './dto/create-track.dto';
 import { Comment, CommentDocument } from './schemas/comment.schema';
 import { Track, TrackDocument } from './schemas/track.schema';
 
+export interface IDelete {
+  trackId: Types.ObjectId;
+  picture: string;
+  audio: string;
+}
+
 @Injectable()
 export class TrackService {
   constructor(
@@ -37,9 +43,11 @@ export class TrackService {
     return track;
   }
 
-  async delete(id: Types.ObjectId): Promise<Types.ObjectId> {
+  async delete(id: Types.ObjectId): Promise<IDelete> {
     const track = await this.trackModel.findByIdAndDelete(id);
-    return track._id;
+    const picture = this.fileService.removeFile(track.picture);
+    const audio = this.fileService.removeFile(track.audio);
+    return { trackId: track._id, picture, audio };
   }
 
   async addComment(dto: CreateCommentDto): Promise<Comment> {

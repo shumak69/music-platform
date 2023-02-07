@@ -23,7 +23,15 @@ export class FileService {
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
-  removeFile(fileName: string) {
-    console.log();
+  removeFile(fileName: string): string {
+    try {
+      const file = fileName.split('/');
+      const filePath = path.join(__dirname, '..', 'static', file[0]);
+      fs.rmSync(path.join(filePath, file[1]));
+      console.log(fileName);
+      return 'file has deleted successfully';
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 }

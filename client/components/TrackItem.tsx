@@ -10,6 +10,8 @@ import { MouseEvent } from "react";
 import styles from "../styles/tracks/TrackItem.module.scss";
 import listens from "../static/image/w26h261390848413visible26.png";
 import Image from "next/image";
+import axios from "axios";
+import { useDispatch } from "react-redux";
 
 interface TrackItemProps {
   track: ITrack;
@@ -18,7 +20,7 @@ interface TrackItemProps {
 
 function TrackItem({ track }: TrackItemProps) {
   const router = useRouter();
-  const { playTrack, pauseTrack, setActiveTrack } = useActions();
+  const { playTrack, pauseTrack, setActiveTrack, deleteTrack } = useActions();
   const { duration, pause, active, audio } = useTypedSelector((state) => state.player);
   function play(e: MouseEvent) {
     e.stopPropagation();
@@ -36,18 +38,25 @@ function TrackItem({ track }: TrackItemProps) {
       }
     }
   }
+
+  async function OnDeleteTrack(e: MouseEvent) {
+    e.stopPropagation();
+    deleteTrack(track._id);
+    console.log(track._id);
+  }
+
   return (
     <Card className={styles.track} onClick={() => router.push("/tracks/" + track._id)}>
       <IconButton onClick={play}>{pause && track === active ? <Pause /> : <PlayArrow />}</IconButton>
       <img src={"http://localhost:3001/" + track.picture} alt={track.name} width={70} height={70} />
       <Grid container direction="column" className={styles.container}>
-        <div>{track.name}</div>
+        <div>{track?.name}</div>
         <div className={styles.artist}>{track.artist}</div>
       </Grid>
       <div>
         {track.listens} <Image width={20} height={20} src={listens} alt="listens" />
       </div>
-      <IconButton className={styles.delete} onClick={(e) => e.stopPropagation()}>
+      <IconButton className={styles.delete} onClick={OnDeleteTrack}>
         <Delete />
       </IconButton>
     </Card>

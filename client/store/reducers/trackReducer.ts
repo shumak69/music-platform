@@ -11,6 +11,8 @@ export const trackReducer = (state = initialState, action: TracksAction): Tracks
       return { ...state, error: action.payload };
     case TracksActionTypes.FETCH_TRACKS:
       return { error: "", tracks: action.payload };
+    case TracksActionTypes.DELETE_TRACK:
+      return { error: "", tracks: state.tracks.filter((item) => item._id !== action.payload) };
     default:
       return state;
   }

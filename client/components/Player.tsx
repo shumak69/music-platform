@@ -11,7 +11,7 @@ import TrackProgressBar from "./TrackProgressBar";
 // let audio: HTMLAudioElement;
 
 function Player() {
-  let { pause, volume, active, currentTime, duration, audio } = useTypedSelector((state) => state.player);
+  const { pause, volume, active, currentTime, duration, audio } = useTypedSelector((state) => state.player);
   const { pauseTrack, playTrack, setVolume, setCurrentTime, setDuration, setAudio } = useActions();
 
   useEffect(() => {
@@ -24,6 +24,9 @@ function Player() {
       audioSettings();
       play();
     }
+    return () => {
+      audio?.pause();
+    };
   }, [active]);
 
   function audioSettings() {
@@ -63,16 +66,19 @@ function Player() {
     audio!.currentTime = +e.target.value;
   }
 
+  console.log(active);
   if (!active) {
     return null;
   }
 
   return (
     <div className={styles.player}>
-      <IconButton onClick={play}>{pause ? <Pause /> : <PlayArrow />}</IconButton>
+      <IconButton onClick={play}>
+        {pause ? <Pause className={styles.color} /> : <PlayArrow className={styles.color} />}
+      </IconButton>
       <Grid container direction="column" className={trackStyle.container}>
-        <div>{active?.name}</div>
-        <div className={trackStyle.artist}>{active?.artist}</div>
+        <div className={styles.trackName}>{active?.name}</div>
+        <div className={styles.artist}>{active?.artist}</div>
       </Grid>
       <TrackProgressBar currentTime={currentTime} duration={duration} onChange={changeCurrentTime} audio />
       <VolumeUp className={styles.volumeUp} />

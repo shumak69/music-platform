@@ -1,6 +1,6 @@
 import { transformToDate } from "@/utils";
 import { ChangeEvent } from "react";
-
+import styles from "../styles/TrackProgressBar.module.scss";
 interface TrackProgressBarProps {
   currentTime: number;
   duration: number;
@@ -10,8 +10,15 @@ interface TrackProgressBarProps {
 
 function TrackProgressBar({ currentTime, duration, onChange, audio }: TrackProgressBarProps) {
   return (
-    <div style={{ display: "flex" }}>
-      <input type="range" min={0} max={duration} value={currentTime} onChange={onChange} />
+    <div className={styles.wrapper}>
+      <input
+        type="range"
+        min={0}
+        max={duration}
+        value={currentTime}
+        onChange={onChange}
+        className={audio ? styles.audioRange : ""}
+      />
       {audio ? (
         <div>
           {transformToDate(currentTime)} / {transformToDate(duration)}

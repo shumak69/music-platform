@@ -45,7 +45,7 @@ interface SetCurrentTimeAction {
 }
 interface SetAudio {
   type: PlayerActionTypes.SET_AUDIO;
-  payload: HTMLAudioElement;
+  payload: HTMLAudioElement | null;
 }
 
 export type PlayerAction =
