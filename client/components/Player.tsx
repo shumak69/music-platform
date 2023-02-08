@@ -65,8 +65,6 @@ function Player() {
     setCurrentTime(+e.target.value);
     audio!.currentTime = +e.target.value;
   }
-
-  console.log(active);
   if (!active) {
     return null;
   }

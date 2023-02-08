@@ -1,4 +1,4 @@
-import { TracksAction, TracksActionTypes } from "@/types/track";
+import { DeleteResponse, TracksAction, TracksActionTypes } from "@/types/track";
 import axios from "axios";
 import { Dispatch } from "react";
 
@@ -26,8 +26,8 @@ export const searchTracks = (query: string) => {
 export const deleteTrack = (id: string) => {
   return async (dispatch: Dispatch<TracksAction>) => {
     try {
-      const response = await axios.delete("http://localhost:3001/tracks/" + id);
-      dispatch({ type: TracksActionTypes.DELETE_TRACK, payload: response.data });
+      const response = await axios.delete<DeleteResponse>("http://localhost:3001/tracks/" + id);
+      dispatch({ type: TracksActionTypes.DELETE_TRACK, payload: response.data.trackId });
     } catch (error) {
       dispatch({ type: TracksActionTypes.FETCH_TRACKS_ERROR, payload: "Произошла ошибка при удалении трека" });
     }

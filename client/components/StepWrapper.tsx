@@ -11,7 +11,11 @@ function StepWrapper({ activeStep, children }: StepWrapperProps) {
     <Container>
       <Stepper activeStep={activeStep}>
         {steps.map((step, i) => (
-          <Step key={i} completed={activeStep > i}>
+          <Step
+            key={i}
+            completed={activeStep > i}
+            className={activeStep > i ? styles.completed : styles.stepLabel}
+          >
             <StepLabel>{step}</StepLabel>
           </Step>
         ))}

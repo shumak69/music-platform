@@ -11,7 +11,7 @@ function Index() {
         <h3>Здесь собраны лучшие треки!</h3>
         <Grid justifyContent="space-around" alignItems="center" container marginTop={8}>
           <Button
-            variant="outlined"
+            variant="contained"
             color="secondary"
             size="large"
             className={styles.button}
@@ -19,7 +19,7 @@ function Index() {
           >
             Список треков
           </Button>
-          <Button variant="outlined" disabled size="large" className={styles.button}>
+          <Button variant="contained" disabled size="large" className={styles.button}>
             Список альбомов
           </Button>
         </Grid>

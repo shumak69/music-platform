@@ -41,8 +41,13 @@ function TrackItem({ track }: TrackItemProps) {
 
   async function OnDeleteTrack(e: MouseEvent) {
     e.stopPropagation();
-    deleteTrack(track._id);
-    console.log(track._id);
+    const password = prompt("Для того чтобы удалить нужно ввести пароль");
+    if (password === "password132") {
+      deleteTrack(track._id);
+      console.log(track._id);
+    } else {
+      alert("Пароль неверный");
+    }
   }
 
   return (

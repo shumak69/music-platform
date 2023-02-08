@@ -6,3 +6,21 @@
 .card {
   width: 600px;
 }
+
+.stepLabel {
+  & span {
+    & span {
+      color: purple;
+      font-size: 1.1em;
+    }
+  }
+}
+
+.completed {
+  & span {
+    & span {
+      color: rgb(252, 242, 134) !important;
+      font-size: 1.1em;
+    }
+  }
+}

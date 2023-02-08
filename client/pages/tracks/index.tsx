@@ -9,6 +9,7 @@ import { Box } from "@mui/system";
 import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
 import { useDispatch } from "react-redux";
+import styles from "../../styles/tracks/Tracks.module.scss";
 
 function Index() {
   const router = useRouter();

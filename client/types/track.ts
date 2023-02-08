@@ -26,6 +26,12 @@ export enum TracksActionTypes {
   DELETE_TRACK = "DELETE_TRACK",
 }
 
+export interface DeleteResponse {
+  trackId: string;
+  audio: string;
+  picture: string;
+}
+
 interface FetchTracksAction {
   type: TracksActionTypes.FETCH_TRACKS;
   payload: ITrack[];
