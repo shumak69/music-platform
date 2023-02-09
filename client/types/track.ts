@@ -46,3 +46,28 @@ interface DeleteTrackAction {
 }
 
 export type TracksAction = FetchTracksAction | FetchTracksErrorAction | DeleteTrackAction;
+
+export enum FavoriteActionTypes {
+  SET_FAVORITE_TRACK = "SET_FAVORITE_TRACK",
+  REMOVE_FAVORITE_TRACK = "REMOVE_FAVORITE_TRACK",
+  INIT_FAVORITE_TRACK = "INIT_FAVORITE_TRACK",
+}
+
+export interface FavoriteTracks {
+  favoriteTracks: ITrack[];
+}
+
+interface SetFavoriteTracks {
+  type: FavoriteActionTypes.SET_FAVORITE_TRACK;
+  payload: ITrack;
+}
+interface RemoveFavoriteTracks {
+  type: FavoriteActionTypes.REMOVE_FAVORITE_TRACK;
+  payload: string;
+}
+interface InitFavoriteTracks {
+  type: FavoriteActionTypes.INIT_FAVORITE_TRACK;
+  payload: ITrack[];
+}
+
+export type FavoriteAction = SetFavoriteTracks | RemoveFavoriteTracks | InitFavoriteTracks;

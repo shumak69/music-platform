@@ -1,18 +1,17 @@
 import { useActions } from "@/hooks/useActions";
 import { useTypedSelector } from "@/hooks/useTypedSelector";
 import { ITrack } from "@/types/track";
-import { transformToDate } from "@/utils";
 import { Delete, Pause, PlayArrow } from "@mui/icons-material";
 import { Grid, IconButton } from "@mui/material";
 import Card from "@mui/material/Card";
-import { useRouter } from "next/router";
-import { MouseEvent } from "react";
-import styles from "../styles/tracks/TrackItem.module.scss";
-import listens from "../static/image/w26h261390848413visible26.png";
 import Image from "next/image";
-import axios from "axios";
-import { useDispatch } from "react-redux";
-
+import { useRouter } from "next/router";
+import { MouseEvent, useEffect, useRef, useState } from "react";
+import listens from "../static/image/w26h261390848413visible26.png";
+import styles from "../styles/tracks/TrackItem.module.scss";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import { parseFromLS } from "@/utils";
 interface TrackItemProps {
   track: ITrack;
   active?: boolean;
@@ -20,8 +19,12 @@ interface TrackItemProps {
 
 function TrackItem({ track }: TrackItemProps) {
   const router = useRouter();
-  const { playTrack, pauseTrack, setActiveTrack, deleteTrack } = useActions();
+  const { playTrack, pauseTrack, setActiveTrack, deleteTrack, setFavorite, removeFavorite, initFavorite } =
+    useActions();
   const { duration, pause, active, audio } = useTypedSelector((state) => state.player);
+  const { favoriteTracks } = useTypedSelector((state) => state.favorite);
+  const [isFavorite, setIsFavorite] = useState<ITrack | undefined>(undefined);
+  const isMounted = useRef(true);
   function play(e: MouseEvent) {
     e.stopPropagation();
     if (track !== active) {
@@ -39,15 +42,35 @@ function TrackItem({ track }: TrackItemProps) {
     }
   }
 
-  async function OnDeleteTrack(e: MouseEvent) {
+  useEffect(() => {
+    if (isMounted.current) {
+      initFavorite(parseFromLS<ITrack[]>("favorites").flat());
+      isMounted.current = false;
+    } else {
+      setIsFavorite(favoriteTracks.find((item) => item._id === track._id));
+      localStorage.setItem("favorites", JSON.stringify(favoriteTracks));
+    }
+  }, [favoriteTracks]);
+
+  function OnDeleteTrack(e: MouseEvent) {
     e.stopPropagation();
     const password = prompt("Для того чтобы удалить нужно ввести пароль");
     if (password === "password132") {
       deleteTrack(track._id);
-      console.log(track._id);
     } else {
       alert("Пароль неверный");
     }
+  }
+
+  function onFavoriteTrack(e: MouseEvent) {
+    e.stopPropagation();
+    if (isFavorite) {
+      removeFavorite(track._id);
+    } else {
+      setFavorite(track);
+    }
+
+    // console.log(track);
   }
 
   return (
@@ -61,6 +84,13 @@ function TrackItem({ track }: TrackItemProps) {
       <div>
         {track.listens} <Image width={20} height={20} src={listens} alt="listens" />
       </div>
+      {isFavorite ? (
+        <FavoriteIcon sx={{ fontSize: 30 }} className={styles.favorite} onClick={onFavoriteTrack} />
+      ) : (
+        <FavoriteBorderIcon className={styles.favorite} sx={{ fontSize: 30 }} onClick={onFavoriteTrack} />
+      )}
+      {/* <FavoriteBorderIcon className={styles.favorite} sx={{ fontSize: 30 }} onClick={onFavoriteTrack} />
+      <FavoriteIcon sx={{ fontSize: 30 }} /> */}
       <IconButton className={styles.delete} onClick={OnDeleteTrack}>
         <Delete />
       </IconButton>

@@ -20,7 +20,7 @@ function Index() {
             Список треков
           </Button>
           <Button variant="contained" disabled size="large" className={styles.button}>
-            Список альбомов
+            Понравившийся треки
           </Button>
         </Grid>
       </div>

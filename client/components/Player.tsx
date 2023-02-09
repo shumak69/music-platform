@@ -12,13 +12,13 @@ import TrackProgressBar from "./TrackProgressBar";
 
 function Player() {
   const { pause, volume, active, currentTime, duration, audio } = useTypedSelector((state) => state.player);
-  const { pauseTrack, playTrack, setVolume, setCurrentTime, setDuration, setAudio } = useActions();
+  const { tracks } = useTypedSelector((state) => state.track);
+  const { pauseTrack, playTrack, setVolume, setCurrentTime, setDuration, setAudio, setActiveTrack } = useActions();
 
   useEffect(() => {
     // console.log(document.querySelector("audio"));
     // console.log("audio = ", audio, " active = ", active);
     if (!audio) {
-      // audio = new Audio();
       setAudio(new Audio());
     } else {
       audioSettings();
@@ -35,6 +35,15 @@ function Player() {
       audio.volume = volume / 100;
       audio.onloadedmetadata = () => {
         setDuration(Math.ceil(audio!.duration));
+      };
+      audio.onended = () => {
+        console.log("End");
+        const currentTrackIndex = tracks.findIndex((value) => value._id === active._id);
+        if (currentTrackIndex !== tracks.length - 1) {
+          console.log("done!");
+          setActiveTrack(tracks[currentTrackIndex + 1]);
+          playTrack();
+        }
       };
       audio.ontimeupdate = () => {
         if (audio!.currentTime >= audio!.duration) {

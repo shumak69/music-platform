@@ -9,3 +9,11 @@ export function getZero(num: number) {
     return `0${num}`;
   }
 }
+
+export function parseFromLS<T>(key: string): T {
+  const data = localStorage.getItem(key);
+  if (data) {
+    return JSON.parse(data);
+  }
+  throw Error("Error occured in localStorage");
+}

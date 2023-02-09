@@ -1,11 +1,13 @@
 import { HYDRATE } from "next-redux-wrapper";
 import { combineReducers } from "redux";
+import { favoriteReducer } from "./favoriteReducer";
 import { playerReducer } from "./playerReducer";
 import { trackReducer } from "./trackReducer";
 
 export const rootReducer = combineReducers({
   player: playerReducer,
   track: trackReducer,
+  favorite: favoriteReducer,
 });
 
 export const reducer = (state: any, action: any) => {

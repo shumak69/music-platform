@@ -50,7 +50,8 @@ function TrackPage({ serverTrack }: TrackPageProps) {
         </Grid>
         <Button
           onClick={() => router.push("/tracks")}
-          variant="outlined"
+          variant="contained"
+          color="warning"
           className={[styles.back, styles.currentColor].join(" ")}
         >
           Назад

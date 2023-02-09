@@ -24,7 +24,7 @@ const drawerWidth = 240;
 const menuItems = [
   { text: "Главная", href: "/" },
   { text: "Список треков", href: "/tracks" },
-  { text: "Список альбом", href: "/albums" },
+  { text: "Понравившийся", href: "/tracks/favorites" },
 ];
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
