@@ -28,7 +28,10 @@ function TrackPage({ serverTrack }: TrackPageProps) {
       });
       setTrack({ ...track, comments: [...track.comments, response.data] });
     } catch (error) {
-      console.log(error);
+      alert(error);
+    } finally {
+      username.value = "";
+      text.value = "";
     }
   };
   return (
@@ -61,8 +64,8 @@ function TrackPage({ serverTrack }: TrackPageProps) {
       <p>{track.text}</p>
       <h1>Комментарии</h1>
       <Grid container className={styles.currentColor}>
-        <TextField label="Ваше имя" fullWidth {...username} />
-        <TextField label="Комментарий" fullWidth multiline rows={4} margin="dense" {...text} />
+        <TextField label="Ваше имя" fullWidth {...username} color="warning" sx={{ color: "" }} />
+        <TextField label="Комментарий" fullWidth multiline rows={4} margin="dense" {...text} color="warning" />
         <Button onClick={addComment}>Отправить комментарий</Button>
       </Grid>
       <div>

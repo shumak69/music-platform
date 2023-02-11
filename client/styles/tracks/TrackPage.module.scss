@@ -14,10 +14,11 @@
 }
 
 .wrapper {
-  background: -webkit-linear-gradient(45deg, #09009f, #00ff95 70%);
+  // background: -webkit-linear-gradient(45deg, #09009f, #35df98 70%);
+  background: -webkit-linear-gradient(45deg, rgb(41, 31, 46), rgb(214, 167, 36) 50%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-bottom: 100px;
+  padding-bottom: 70px;
 }
 
 .currentColor {

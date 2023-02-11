@@ -7,9 +7,9 @@ import { Search } from "@mui/icons-material";
 import { Button, Card, Grid, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { useRouter } from "next/router";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-
+import styles from "../../styles/tracks/index.module.scss";
 function Index() {
   const router = useRouter();
   const { tracks, error } = useTypedSelector((state) => state.track);
@@ -27,6 +27,9 @@ function Index() {
       }, 500)
     );
   };
+  useEffect(() => {
+    dispatch(fetchTracks());
+  }, []);
   if (error) {
     return (
       <MainLayout>
@@ -48,6 +51,11 @@ function Index() {
               </Box>
               <Button onClick={() => router.push("/tracks/create")}>Загрузить</Button>
             </Grid>
+            {!tracks.length && (
+              <div className={styles.empty}>
+                <div>При получении запроса произошла ошибка 🙁</div>
+              </div>
+            )}
           </Box>
           <TrackList tracks={tracks} />
         </Card>
@@ -57,7 +65,12 @@ function Index() {
 }
 
 export default Index;
-export const getServerSideProps = wrapper.getServerSideProps((store) => async (): Promise<any> => {
-  const dispatch = store.dispatch as NextThunkDispatch;
-  return await dispatch(fetchTracks());
-});
+// export const getServerSideProps = wrapper.getServerSideProps((store) => async (): Promise<any> => {
+//   const dispatch = store.dispatch as NextThunkDispatch;
+//   return await dispatch(fetchTracks());
+// });
+// export const getServerSideProps = wrapper.getServerSideProps((store) => ({ req, res, ...etc }) => {
+//   console.log("2. Page.getServerSideProps uses the store to dispatch things");
+//   const dispatch = store.dispatch as NextThunkDispatch;
+//   return dispatch(fetchTracks());
+// });

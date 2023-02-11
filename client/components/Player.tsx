@@ -3,7 +3,7 @@ import { useTypedSelector } from "@/hooks/useTypedSelector";
 import { Pause, PlayArrow, VolumeUp } from "@mui/icons-material";
 import { Grid, IconButton } from "@mui/material";
 import axios from "axios";
-import { ChangeEvent, useEffect } from "react";
+import { ChangeEvent, useEffect, useRef } from "react";
 import styles from "../styles/Player.module.scss";
 import trackStyle from "../styles/tracks/TrackItem.module.scss";
 import TrackProgressBar from "./TrackProgressBar";
@@ -14,18 +14,20 @@ function Player() {
   const { pause, volume, active, currentTime, duration, audio } = useTypedSelector((state) => state.player);
   const { tracks } = useTypedSelector((state) => state.track);
   const { pauseTrack, playTrack, setVolume, setCurrentTime, setDuration, setAudio, setActiveTrack } = useActions();
-
+  const isMounted = useRef(false);
   useEffect(() => {
     // console.log(document.querySelector("audio"));
     // console.log("audio = ", audio, " active = ", active);
     if (!audio) {
       setAudio(new Audio());
-    } else {
+    } else if (isMounted.current && !pause) {
+      console.log(pause);
       audioSettings();
       play();
     }
+    isMounted.current = true;
     return () => {
-      audio?.pause();
+      // audio?.pause();
     };
   }, [active]);
 

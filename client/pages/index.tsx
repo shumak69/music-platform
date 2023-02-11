@@ -19,7 +19,13 @@ function Index() {
           >
             Список треков
           </Button>
-          <Button variant="contained" disabled size="large" className={styles.button}>
+          <Button
+            variant="contained"
+            size="large"
+            className={styles.button}
+            color="success"
+            onClick={() => router.push("/tracks/favorites")}
+          >
             Понравившийся треки
           </Button>
         </Grid>
