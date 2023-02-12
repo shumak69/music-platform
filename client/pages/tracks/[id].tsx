@@ -19,6 +19,7 @@ function TrackPage({ serverTrack }: TrackPageProps) {
   const router = useRouter();
   const username = useInput("");
   const text = useInput("");
+
   const addComment = async () => {
     try {
       const response = await axios.post("http://localhost:3001/tracks/comment", {
@@ -30,8 +31,8 @@ function TrackPage({ serverTrack }: TrackPageProps) {
     } catch (error) {
       alert(error);
     } finally {
-      username.value = "";
-      text.value = "";
+      username.onChange("");
+      text.onChange("");
     }
   };
   return (

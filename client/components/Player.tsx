@@ -7,7 +7,7 @@ import { ChangeEvent, useEffect, useRef } from "react";
 import styles from "../styles/Player.module.scss";
 import trackStyle from "../styles/tracks/TrackItem.module.scss";
 import TrackProgressBar from "./TrackProgressBar";
-
+import RepeatIcon from "@mui/icons-material/Repeat";
 // let audio: HTMLAudioElement;
 
 function Player() {
@@ -92,6 +92,7 @@ function Player() {
       <TrackProgressBar currentTime={currentTime} duration={duration} onChange={changeCurrentTime} audio />
       <VolumeUp className={styles.volumeUp} />
       <TrackProgressBar currentTime={volume} duration={100} onChange={changeVolume} />
+      <RepeatIcon className={styles.repeat} />
     </div>
   );
 }
