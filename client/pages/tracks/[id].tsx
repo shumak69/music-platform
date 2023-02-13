@@ -35,6 +35,7 @@ function TrackPage({ serverTrack }: TrackPageProps) {
       text.onChange("");
     }
   };
+  console.log(track.text || "Слова отсутствуют");
   return (
     <MainLayout
       title={track.name + " - " + track.artist}
@@ -62,7 +63,7 @@ function TrackPage({ serverTrack }: TrackPageProps) {
         </Button>
       </Grid>
       <h1>Слова к треку</h1>
-      <p>{track.text}</p>
+      <p className={styles.text}>{track.text || "Слова отсутствуют"}</p>
       <h1>Комментарии</h1>
       <Grid container className={styles.currentColor}>
         <TextField label="Ваше имя" fullWidth {...username} color="warning" sx={{ color: "" }} />

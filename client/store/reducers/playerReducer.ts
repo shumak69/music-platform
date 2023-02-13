@@ -7,6 +7,7 @@ const initialState: PlayerState = {
   duration: 0,
   pause: true,
   audio: null,
+  repeat: false,
 };
 
 export const playerReducer = (state = initialState, action: PlayerAction): PlayerState => {
@@ -25,6 +26,8 @@ export const playerReducer = (state = initialState, action: PlayerAction): Playe
       return { ...state, volume: action.payload };
     case PlayerActionTypes.SET_AUDIO:
       return { ...state, audio: action.payload };
+    case PlayerActionTypes.SET_REPEAT:
+      return { ...state, repeat: !state.repeat };
     default:
       return state;
   }

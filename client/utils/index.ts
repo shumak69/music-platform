@@ -10,10 +10,11 @@ export function getZero(num: number) {
   }
 }
 
-export function parseFromLS<T>(key: string): T {
+export function parseFromLS<T>(key: string) {
   const data = localStorage.getItem(key);
   if (data) {
     return JSON.parse(data);
   }
-  throw Error("Error occured in localStorage");
+  return [];
+  // throw Error("Error occured in localStorage");
 }

@@ -16,6 +16,7 @@ import ListItemText from "@mui/material/ListItemText";
 import { styled, useTheme } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import * as React from "react";
 
@@ -104,7 +105,7 @@ export default function NavBar() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Spofity
+            <Link href="/">Spofity</Link>
           </Typography>
         </Toolbar>
       </AppBar>

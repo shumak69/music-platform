@@ -27,7 +27,7 @@ function TrackItem({ track }: TrackItemProps) {
   const isMounted = useRef(true);
   function play(e: MouseEvent) {
     e.stopPropagation();
-    if (track !== active) {
+    if (track._id !== active?._id) {
       setActiveTrack(track);
       playTrack();
       audio?.pause();
@@ -75,7 +75,7 @@ function TrackItem({ track }: TrackItemProps) {
 
   return (
     <Card className={styles.track} onClick={() => router.push("/tracks/" + track._id)}>
-      <IconButton onClick={play}>{pause && track === active ? <Pause /> : <PlayArrow />}</IconButton>
+      <IconButton onClick={play}>{pause && track._id === active?._id ? <Pause /> : <PlayArrow />}</IconButton>
       <img src={"http://localhost:3001/" + track.picture} alt={track.name} width={70} height={70} />
       <Grid container direction="column" className={styles.container}>
         <div>{track?.name}</div>

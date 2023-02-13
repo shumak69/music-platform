@@ -21,4 +21,9 @@
 
 .favorite {
   margin-left: auto;
+  cursor: pointer;
+  transition: 0.5s all;
+  &:hover {
+    transform: scale(1.4);
+  }
 }

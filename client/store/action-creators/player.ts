@@ -7,6 +7,9 @@ export const playTrack = (): PlayerAction => {
 export const pauseTrack = (): PlayerAction => {
   return { type: PlayerActionTypes.PAUSE };
 };
+export const setRepeat = (): PlayerAction => {
+  return { type: PlayerActionTypes.SET_REPEAT };
+};
 export const setDuration = (payload: number): PlayerAction => {
   return { type: PlayerActionTypes.SET_DURATION, payload };
 };

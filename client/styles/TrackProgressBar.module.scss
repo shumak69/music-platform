@@ -1,7 +1,46 @@
 .wrapper {
   display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 5;
+  input {
+    -webkit-appearance: none;
+    border-radius: 10px;
+    height: 10px;
+    position: relative;
+    width: 100%;
+    /*     background: #1B2FB2; */
+  }
+
+  input::-webkit-slider-thumb {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+    background: #2ce807;
+    position: relative;
+    z-index: 5;
+  }
 }
 
 .audioRange {
   width: 20vw;
+}
+
+.progressBar {
+  height: 10px;
+  background: #c814bc;
+  width: 50%;
+  position: absolute;
+  top: 7.7px;
+  z-index: 2;
+  border-radius: 5px;
+  pointer-events: none;
+  left: 2px;
+  max-width: 100%;
+}
+
+.container {
+  position: relative;
+  margin-right: 5px;
 }
