@@ -24,15 +24,31 @@ function Player() {
     if (!audio) {
       setAudio(new Audio());
     } else if (isMounted.current && !pause) {
-      // console.log(pause);
       audioSettings();
       play();
     }
     isMounted.current = true;
-    return () => {
-      // audio?.pause();
-    };
-  }, [active]);
+  }, [active, repeat]);
+
+  useEffect(() => {
+    if (active && audio) {
+      audio.onended = () => {
+        axios.post("http://localhost:3001/tracks/listen/" + active!._id);
+        console.log(repeat);
+        if (repeat) {
+          audio.currentTime = 0;
+          setCurrentTime(0);
+          audio.play();
+        } else {
+          const currentTrackIndex = tracks.findIndex((value) => value._id === active._id);
+          if (currentTrackIndex !== tracks.length - 1) {
+            setActiveTrack(tracks[currentTrackIndex + 1]);
+            playTrack();
+          }
+        }
+      };
+    }
+  }, [active, repeat]);
 
   function audioSettings() {
     if (active && audio) {
@@ -40,14 +56,6 @@ function Player() {
       audio.volume = volume / 100;
       audio.onloadedmetadata = () => {
         setDuration(Math.ceil(audio!.duration));
-      };
-      audio.onended = () => {
-        axios.post("http://localhost:3001/tracks/listen/" + active!._id);
-        const currentTrackIndex = tracks.findIndex((value) => value._id === active._id);
-        if (currentTrackIndex !== tracks.length - 1) {
-          setActiveTrack(tracks[currentTrackIndex + 1]);
-          playTrack();
-        }
       };
       audio.ontimeupdate = () => {
         setCurrentTime(Math.ceil(audio!.currentTime));
