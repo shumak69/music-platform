@@ -19,16 +19,16 @@ function Player() {
     useActions();
   const isMounted = useRef(false);
   useEffect(() => {
-    // console.log(document.querySelector("audio"));
-    // console.log("audio = ", audio, " active = ", active);
     if (!audio) {
       setAudio(new Audio());
     } else if (isMounted.current && !pause) {
-      audioSettings();
-      play();
+      console.log("playing");
+      console.log(2);
+      // audioSettings();
+      // play();
     }
     isMounted.current = true;
-  }, [active, repeat]);
+  }, [active]);
 
   useEffect(() => {
     if (active && audio) {
@@ -43,7 +43,9 @@ function Player() {
           const currentTrackIndex = tracks.findIndex((value) => value._id === active._id);
           if (currentTrackIndex !== tracks.length - 1) {
             setActiveTrack(tracks[currentTrackIndex + 1]);
-            playTrack();
+            audioSettings();
+            pauseTrack();
+            audio.play();
           }
         }
       };
@@ -64,13 +66,13 @@ function Player() {
     }
   }
 
-  const play = () => {
+  const play = async () => {
     if (pause) {
       playTrack();
       audio!.pause();
     } else {
       pauseTrack();
-      audio!.play();
+      await audio!.play();
     }
   };
 

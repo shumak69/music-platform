@@ -19,25 +19,47 @@ interface TrackItemProps {
 
 function TrackItem({ track }: TrackItemProps) {
   const router = useRouter();
-  const { playTrack, pauseTrack, setActiveTrack, deleteTrack, setFavorite, removeFavorite, initFavorite } =
-    useActions();
-  const { duration, pause, active, audio } = useTypedSelector((state) => state.player);
+  const {
+    playTrack,
+    pauseTrack,
+    setActiveTrack,
+    deleteTrack,
+    setFavorite,
+    removeFavorite,
+    initFavorite,
+    setDuration,
+    setCurrentTime,
+  } = useActions();
+  const { duration, pause, active, audio, volume } = useTypedSelector((state) => state.player);
   const { favoriteTracks } = useTypedSelector((state) => state.favorite);
   const [isFavorite, setIsFavorite] = useState<ITrack | undefined>(undefined);
   const isMounted = useRef(true);
-  function play(e: MouseEvent) {
+  async function play(e: MouseEvent) {
     e.stopPropagation();
     if (track._id !== active?._id) {
       setActiveTrack(track);
-      playTrack();
-      audio?.pause();
+      audio!.src = "http://localhost:3001/" + track.audio;
+      console.log(audio);
+      // audio?.pause();
+      console.log(1);
+      // playTrack();
+      audio!.volume = volume / 100;
+      audio!.onloadedmetadata = () => {
+        setDuration(Math.ceil(audio!.duration));
+      };
+      audio!.ontimeupdate = () => {
+        setCurrentTime(Math.ceil(audio!.currentTime));
+        // console.log(audio.currentTime, audio.duration);
+      };
+      pauseTrack();
+      await audio?.play();
     } else {
       if (pause) {
         playTrack();
         audio?.pause();
       } else {
         pauseTrack();
-        audio?.play();
+        await audio?.play();
       }
     }
   }
