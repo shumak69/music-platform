@@ -35,21 +35,21 @@ function TrackPage({ serverTrack }: TrackPageProps) {
       text.onChange("");
     }
   };
-  console.log(track.text || "Слова отсутствуют");
+  console.log(track?.text || "Слова отсутствуют");
   return (
     <MainLayout
-      title={track.name + " - " + track.artist}
+      title={track?.name + " - " + track?.artist}
       className={styles.wrapper}
-      keywords={"Музыка, артисты, " + track.name + ", " + track.artist}
+      keywords={"Музыка, артисты, " + track?.name + ", " + track?.artist}
     >
       <Grid justifyContent="space-between" container alignItems="center">
-        <Grid container className={styles.container} xs={8} item>
-          <img src={"http://localhost:3001/" + track.picture} alt={track.name} width={200} height={200} />
+        <Grid container className={styles.container} xs={10} item>
+          <img src={"http://localhost:3001/" + track?.picture} alt={track?.name} width={200} height={200} />
           <div className={styles.info}>
-            <h1 className={styles.trackName}>{track.name}</h1>
-            <h2 className={styles.artist}> {track.artist}</h2>
+            <h1 className={styles.trackName}>{track?.name}</h1>
+            <h2 className={styles.artist}> {track?.artist}</h2>
             <h2 className={styles.listens}>
-              {track.listens} <Image width={20} height={20} src={listens} alt="listens"></Image>
+              {track?.listens} <Image width={20} height={20} src={listens} alt="listens"></Image>
             </h2>
           </div>
         </Grid>
@@ -63,7 +63,7 @@ function TrackPage({ serverTrack }: TrackPageProps) {
         </Button>
       </Grid>
       <h1>Слова к треку</h1>
-      <p className={styles.text}>{track.text || "Слова отсутствуют"}</p>
+      <pre className={styles.text}>{track?.text || "Слова отсутствуют"}</pre>
       <h1>Комментарии</h1>
       <Grid container className={styles.currentColor}>
         <TextField label="Ваше имя" fullWidth {...username} color="warning" sx={{ color: "" }} />
@@ -71,7 +71,7 @@ function TrackPage({ serverTrack }: TrackPageProps) {
         <Button onClick={addComment}>Отправить комментарий</Button>
       </Grid>
       <div>
-        {track.comments.map((comment, index) => (
+        {track?.comments.map((comment, index) => (
           <Fragment key={comment._id}>
             {index !== 0 && <Divider orientation="horizontal" />}
             <div className={styles.comment}>
@@ -88,10 +88,15 @@ function TrackPage({ serverTrack }: TrackPageProps) {
 export default TrackPage;
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  const response = await axios.get<ITrack>("http://localhost:3001/tracks/" + params!.id);
+  let response = null;
+  try {
+    response = await axios.get<ITrack>("http://localhost:3001/tracks/" + params!.id);
+  } catch (error) {
+    console.error(error);
+  }
   return {
     props: {
-      serverTrack: response.data,
+      serverTrack: response ? response.data : null,
     },
   };
 };

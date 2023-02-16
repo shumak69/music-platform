@@ -99,23 +99,23 @@ function TrackItem({ track }: TrackItemProps) {
     <Card className={styles.track} onClick={() => router.push("/tracks/" + track._id)}>
       <IconButton onClick={play}>{pause && track._id === active?._id ? <Pause /> : <PlayArrow />}</IconButton>
       <img src={"http://localhost:3001/" + track.picture} alt={track.name} width={70} height={70} />
-      <Grid container direction="column" className={styles.container}>
-        <div>{track?.name}</div>
-        <div className={styles.artist}>{track.artist}</div>
+      <Grid container direction="column" className={styles.container} xs={5} item>
+        <div>{track.name.length > 38 ? track.name.slice(0, 36) + "..." : track.name}</div>
+        <div className={styles.artist}>
+          {track.artist.length > 46 ? track.artist.slice(0, 40) + "..." : track.artist}
+        </div>
       </Grid>
-      <div>
+      <div className={styles.listeners}>
         {track.listens} <Image width={20} height={20} src={listens} alt="listens" />
       </div>
-      {isFavorite ? (
-        <FavoriteIcon sx={{ fontSize: 30 }} className={styles.favorite} onClick={onFavoriteTrack} />
-      ) : (
-        <FavoriteBorderIcon className={styles.favorite} sx={{ fontSize: 30 }} onClick={onFavoriteTrack} />
-      )}
-      {/* <FavoriteBorderIcon className={styles.favorite} sx={{ fontSize: 30 }} onClick={onFavoriteTrack} />
-      <FavoriteIcon sx={{ fontSize: 30 }} /> */}
-      <IconButton className={styles.delete} onClick={OnDeleteTrack}>
-        <Delete />
-      </IconButton>
+      <div className={styles.iconWrapper}>
+        <IconButton className={styles.favorite} onClick={onFavoriteTrack}>
+          {isFavorite ? <FavoriteIcon sx={{ fontSize: 30 }} /> : <FavoriteBorderIcon sx={{ fontSize: 30 }} />}
+        </IconButton>
+        <IconButton className={styles.delete} onClick={OnDeleteTrack}>
+          <Delete />
+        </IconButton>
+      </div>
     </Card>
   );
 }

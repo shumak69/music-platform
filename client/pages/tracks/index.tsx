@@ -40,9 +40,9 @@ function Index() {
     }
   }, []);
   return (
-    <MainLayout title="Список треков">
+    <MainLayout title="Список треков" className={styles.pb}>
       <Grid container justifyContent="center">
-        <Card style={{ width: 900 }}>
+        <Card className={styles.card}>
           {isLoading ? (
             <div className={styles.container}>
               <LoopIcon sx={{ color: "#ff8f00", height: 50, width: 100 }} />

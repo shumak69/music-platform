@@ -16,6 +16,14 @@
   }
 }
 
+.card {
+  width: 900px;
+}
+
+.pb {
+  padding-bottom: 100px;
+}
+
 @keyframes spinner {
   from {
     translate: rotate(0deg);

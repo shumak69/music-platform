@@ -8,6 +8,7 @@ import styles from "../styles/Player.module.scss";
 import trackStyle from "../styles/tracks/TrackItem.module.scss";
 import TrackProgressBar from "./TrackProgressBar";
 import RepeatIcon from "@mui/icons-material/Repeat";
+import { ITrack } from "@/types/track";
 // let audio: HTMLAudioElement;
 
 function Player() {
@@ -33,8 +34,7 @@ function Player() {
   useEffect(() => {
     if (active && audio) {
       audio.onended = () => {
-        axios.post("http://localhost:3001/tracks/listen/" + active!._id);
-        console.log(repeat);
+        axios.post("http://localhost:3001/tracks/listen/" + active._id);
         if (repeat) {
           audio.currentTime = 0;
           setCurrentTime(0);
@@ -43,7 +43,7 @@ function Player() {
           const currentTrackIndex = tracks.findIndex((value) => value._id === active._id);
           if (currentTrackIndex !== tracks.length - 1) {
             setActiveTrack(tracks[currentTrackIndex + 1]);
-            audioSettings();
+            audioSettings(tracks[currentTrackIndex + 1]);
             pauseTrack();
             audio.play();
           }
@@ -52,7 +52,7 @@ function Player() {
     }
   }, [active, repeat]);
 
-  function audioSettings() {
+  function audioSettings(active: ITrack) {
     if (active && audio) {
       audio.src = "http://localhost:3001/" + active.audio;
       audio.volume = volume / 100;

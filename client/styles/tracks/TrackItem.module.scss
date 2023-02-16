@@ -27,3 +27,13 @@
     transform: scale(1.4);
   }
 }
+
+.iconWrapper {
+  justify-content: center;
+  display: flex;
+  flex-grow: 1;
+}
+
+.listeners {
+  width: 120px;
+}

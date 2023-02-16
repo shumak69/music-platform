@@ -22,9 +22,9 @@ function Favorites() {
     // setFavorite(parseFromLS<ITrack[]>("favorites"));
   }, []);
   return (
-    <MainLayout title="Список треков">
+    <MainLayout title="Список треков" className={styles.pb}>
       <Grid container justifyContent="center">
-        <Card style={{ width: 900 }}>
+        <Card className={styles.card}>
           <Box p={3}>
             <Box p={2}>
               <h1>Список понравившихся треков</h1>
