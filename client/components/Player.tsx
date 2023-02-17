@@ -3,22 +3,42 @@ import { useTypedSelector } from "@/hooks/useTypedSelector";
 import { Pause, PlayArrow, VolumeUp } from "@mui/icons-material";
 import { Grid, IconButton } from "@mui/material";
 import axios from "axios";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, MouseEvent, useEffect, useRef, useState } from "react";
 import styles from "../styles/Player.module.scss";
 import trackStyle from "../styles/tracks/TrackItem.module.scss";
 import TrackProgressBar from "./TrackProgressBar";
 import RepeatIcon from "@mui/icons-material/Repeat";
 import { ITrack } from "@/types/track";
+import { useRouter } from "next/router";
 // let audio: HTMLAudioElement;
 
 function Player() {
+  const router = useRouter();
   const { pause, volume, active, currentTime, duration, audio, repeat } = useTypedSelector(
     (state) => state.player
   );
   const { tracks } = useTypedSelector((state) => state.track);
+  const { favoriteTracks } = useTypedSelector((state) => state.favorite);
+
   const { pauseTrack, playTrack, setVolume, setCurrentTime, setDuration, setAudio, setActiveTrack, setRepeat } =
     useActions();
   const isMounted = useRef(false);
+
+  useEffect(() => {
+    function pauseTrackKey(e: KeyboardEvent) {
+      if (e.code === "Space" && active) {
+        console.log("key");
+        e.preventDefault();
+        play();
+      }
+    }
+
+    window.addEventListener("keydown", pauseTrackKey);
+    return () => {
+      window.removeEventListener("keydown", pauseTrackKey);
+    };
+  }, [active, pause]);
+
   useEffect(() => {
     if (!audio) {
       setAudio(new Audio());
@@ -40,10 +60,16 @@ function Player() {
           setCurrentTime(0);
           audio.play();
         } else {
-          const currentTrackIndex = tracks.findIndex((value) => value._id === active._id);
-          if (currentTrackIndex !== tracks.length - 1) {
-            setActiveTrack(tracks[currentTrackIndex + 1]);
-            audioSettings(tracks[currentTrackIndex + 1]);
+          let trackList: ITrack[];
+          if (router.pathname === "/tracks/favorites") {
+            trackList = favoriteTracks;
+          } else {
+            trackList = tracks;
+          }
+          const currentTrackIndex = trackList.findIndex((value) => value._id === active._id);
+          if (currentTrackIndex !== trackList.length - 1) {
+            setActiveTrack(trackList[currentTrackIndex + 1]);
+            audioSettings(trackList[currentTrackIndex + 1]);
             pauseTrack();
             audio.play();
           }
@@ -69,10 +95,10 @@ function Player() {
   const play = async () => {
     if (pause) {
       playTrack();
-      audio!.pause();
+      audio?.pause();
     } else {
       pauseTrack();
-      await audio!.play();
+      await audio?.play();
     }
   };
 
@@ -82,10 +108,11 @@ function Player() {
     audio!.volume = +e.target.value / 100;
   }
   function changeCurrentTime(e: ChangeEvent<HTMLInputElement>): void {
-    audio!.play();
+    // audio!.play();
     setCurrentTime(+e.target.value);
     audio!.currentTime = +e.target.value;
   }
+
   if (!active) {
     return null;
   }

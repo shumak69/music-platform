@@ -37,3 +37,15 @@
 .listeners {
   width: 120px;
 }
+
+.overflow,
+.artist {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  white-space: nowrap;
+}
+
+.img {
+  cursor: pointer;
+}

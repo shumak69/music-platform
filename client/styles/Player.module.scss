@@ -27,6 +27,14 @@
   color: rgb(255, 239, 12);
 }
 
+.trackName,
+.artist {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .repeat {
   margin-left: 10px;
   height: 30px;
