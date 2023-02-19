@@ -10,8 +10,8 @@ import TrackProgressBar from "./TrackProgressBar";
 import RepeatIcon from "@mui/icons-material/Repeat";
 import { ITrack } from "@/types/track";
 import { useRouter } from "next/router";
-// let audio: HTMLAudioElement;
-
+import SkipNextIcon from "@mui/icons-material/SkipNext";
+import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
 function Player() {
   const router = useRouter();
   const { pause, volume, active, currentTime, duration, audio, repeat } = useTypedSelector(
@@ -102,6 +102,38 @@ function Player() {
     }
   };
 
+  const prevTrack = () => {
+    let trackList: ITrack[];
+    if (router.pathname === "/tracks/favorites") {
+      trackList = favoriteTracks;
+    } else {
+      trackList = tracks;
+    }
+    const currentTrackIndex = trackList.findIndex((value) => value._id === active?._id);
+    if (currentTrackIndex !== 0) {
+      setActiveTrack(trackList[currentTrackIndex - 1]);
+      audioSettings(trackList[currentTrackIndex - 1]);
+      pauseTrack();
+      audio?.play();
+    }
+  };
+
+  const nextTrack = () => {
+    let trackList: ITrack[];
+    if (router.pathname === "/tracks/favorites") {
+      trackList = favoriteTracks;
+    } else {
+      trackList = tracks;
+    }
+    const currentTrackIndex = trackList.findIndex((value) => value._id === active?._id);
+    if (currentTrackIndex !== trackList.length - 1) {
+      setActiveTrack(trackList[currentTrackIndex + 1]);
+      audioSettings(trackList[currentTrackIndex + 1]);
+      pauseTrack();
+      audio?.play();
+    }
+  };
+
   function changeVolume(e: ChangeEvent<HTMLInputElement>): void {
     console.log(e.target);
     setVolume(+e.target.value);
@@ -118,8 +150,14 @@ function Player() {
   }
   return (
     <div className={styles.player}>
+      <IconButton onClick={prevTrack}>
+        <SkipPreviousIcon className={styles.controllerIcon} />
+      </IconButton>
       <IconButton onClick={play}>
-        {pause ? <Pause className={styles.color} /> : <PlayArrow className={styles.color} />}
+        {pause ? <Pause className={styles.controllerIcon} /> : <PlayArrow className={styles.controllerIcon} />}
+      </IconButton>
+      <IconButton onClick={nextTrack}>
+        <SkipNextIcon className={styles.controllerIcon} />
       </IconButton>
       <Grid container direction="column" className={trackStyle.container}>
         <div className={styles.trackName}>{active?.name}</div>
