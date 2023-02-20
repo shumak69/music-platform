@@ -3,10 +3,10 @@ import StepWrapper from "@/components/StepWrapper";
 import { useInput } from "@/hooks/useInput";
 import MainLayout from "@/layouts/MainLayout";
 import { Button, Grid, TextField } from "@mui/material";
-import { ChangeEvent, FocusEvent, useState } from "react";
-import styles from "../../styles/create.module.scss";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { FocusEvent, useState } from "react";
+import styles from "../../styles/create.module.scss";
 function Create() {
   const [activeStep, setActiveStep] = useState(0);
   const [picture, setPicture] = useState<File | null>(null);
@@ -57,20 +57,6 @@ function Create() {
       default:
         break;
     }
-    // if (activeStep !== 2) {
-    //   setActiveStep((step) => step + 1);
-    // } else {
-    //   const formData = new FormData();
-    //   formData.append("name", name.value);
-    //   formData.append("text", text.value);
-    //   formData.append("artist", artist.value);
-    //   formData.append("picture", picture!);
-    //   formData.append("audio", audio!);
-    //   axios
-    //     .post("http://localhost:3001/tracks", formData)
-    //     .then((resp) => router.push("/tracks"))
-    //     .catch((e) => console.log(e));
-    // }
   };
   const back = () => {
     setActiveStep((step) => step - 1);
@@ -83,7 +69,7 @@ function Create() {
   };
 
   return (
-    <MainLayout>
+    <MainLayout className={styles.layout}>
       <StepWrapper activeStep={activeStep}>
         {activeStep === 0 && (
           <Grid container direction="column" className={styles.container}>
@@ -103,7 +89,7 @@ function Create() {
               error={artistError}
               onBlur={(e) => onBlurInput(e, setArtistError)}
             />
-            <TextField label="Слова к треку" multiline rows={3} margin="dense" {...text} />
+            <TextField label="Слова к треку" multiline rows={5} margin="dense" {...text} />
           </Grid>
         )}
         {activeStep === 1 && (
@@ -121,7 +107,7 @@ function Create() {
           </FileUpload>
         )}
       </StepWrapper>
-      <Grid container justifyContent="space-between">
+      <Grid container justifyContent="space-between" className={styles.buttonWrapper}>
         <Button disabled={activeStep === 0} onClick={back} variant="contained" size="large">
           Назад
         </Button>

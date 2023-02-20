@@ -25,9 +25,9 @@ function Favorites() {
     <MainLayout title="Список понравившихся треков" className={styles.pb}>
       <Grid container justifyContent="center">
         <Card className={styles.card}>
-          <Box p={3}>
-            <Box p={2}>
-              <h1>Список понравившихся треков</h1>
+          <Box p={3} className={styles.box}>
+            <Box p={2} className={styles.wrapper}>
+              <h1 className={styles.header}>Список понравившихся треков</h1>
             </Box>
           </Box>
           {!favoriteTracks.length && (

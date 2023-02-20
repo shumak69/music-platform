@@ -16,7 +16,7 @@
 
 .controllerIcon {
   color: white;
-  font-size: 36px;
+  font-size: 33px;
 }
 
 .trackName {
@@ -41,4 +41,53 @@
   height: 30px;
   width: 30px;
   cursor: pointer;
+}
+
+.container {
+  width: 200px;
+  margin: 0 20px;
+}
+
+@media (max-width: 992px) {
+  .container {
+    margin: 0;
+    margin-right: 5px;
+    width: 130px;
+    font-size: 15px;
+  }
+  .player {
+    padding: 0 10px 0 5px;
+  }
+  .iconButton {
+    padding: 2px;
+  }
+  .artist {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    order: -1;
+    flex-basis: 100%;
+    text-align: center;
+  }
+  .player {
+    flex-wrap: wrap;
+    height: fit-content;
+  }
+  .trackName {
+    font-size: 22px;
+  }
+
+  .artist {
+    font-size: 16px;
+  }
+  .iconButton {
+    flex-basis: 33%;
+    padding: 5px;
+  }
+  .controllerIcon {
+    font-size: 44px;
+  }
 }

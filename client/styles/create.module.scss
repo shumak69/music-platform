@@ -5,3 +5,17 @@
 .error {
   color: red;
 }
+
+.layout {
+  padding-bottom: 50px;
+}
+
+@media (max-width: 992px) {
+  .layout {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .buttonWrapper {
+    margin-top: 10px;
+  }
+}

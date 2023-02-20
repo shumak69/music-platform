@@ -19,23 +19,29 @@ function TrackPage({ serverTrack }: TrackPageProps) {
   const router = useRouter();
   const username = useInput("");
   const text = useInput("");
+  const [usernameError, setUsernameError] = useState(false);
+  const [textError, setTextError] = useState(false);
 
   const addComment = async () => {
-    try {
-      const response = await axios.post("http://localhost:3001/tracks/comment", {
-        username: username.value,
-        text: text.value,
-        trackId: track._id,
-      });
-      setTrack({ ...track, comments: [...track.comments, response.data] });
-    } catch (error) {
-      alert(error);
-    } finally {
-      username.onChange("");
-      text.onChange("");
+    setUsernameError(!username.value);
+    setTextError(!text.value);
+    console.log(usernameError, textError);
+    if (username.value && text.value) {
+      try {
+        const response = await axios.post("http://localhost:3001/tracks/comment", {
+          username: username.value,
+          text: text.value,
+          trackId: track._id,
+        });
+        setTrack({ ...track, comments: [...track.comments, response.data] });
+      } catch (error) {
+        alert(error);
+      } finally {
+        username.onChange("");
+        text.onChange("");
+      }
     }
   };
-  console.log(track?.text || "Слова отсутствуют");
   return (
     <MainLayout
       title={track?.name + " - " + track?.artist}
@@ -66,8 +72,24 @@ function TrackPage({ serverTrack }: TrackPageProps) {
       <pre className={styles.text}>{track?.text || "Слова отсутствуют"}</pre>
       <h1>Комментарии</h1>
       <Grid container className={styles.currentColor}>
-        <TextField label="Ваше имя" fullWidth {...username} color="warning" sx={{ color: "" }} />
-        <TextField label="Комментарий" fullWidth multiline rows={4} margin="dense" {...text} color="warning" />
+        <TextField
+          label="Ваше имя"
+          fullWidth
+          {...username}
+          sx={{ color: "" }}
+          error={usernameError}
+          focused={usernameError}
+        />
+        <TextField
+          label="Комментарий"
+          fullWidth
+          multiline
+          rows={4}
+          margin="dense"
+          {...text}
+          error={textError}
+          focused={textError}
+        />
         <Button onClick={addComment}>Отправить комментарий</Button>
       </Grid>
       <div>

@@ -44,3 +44,33 @@
   position: relative;
   margin-right: 5px;
 }
+
+@media (max-width: 992px) {
+  .value {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .wrapper {
+    flex-basis: 42%;
+  }
+  // .audioRange {
+  //   width: 30vw;
+  // }
+  .container {
+    flex-grow: 1;
+  }
+  .audioWrapper {
+    flex-basis: 52%;
+  }
+  .soundWrapper {
+    flex-basis: 35%;
+    .value {
+      display: none;
+    }
+  }
+  .value {
+    font-size: 15px;
+  }
+}

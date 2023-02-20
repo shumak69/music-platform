@@ -32,3 +32,16 @@
     transform: rotate(180deg);
   }
 }
+
+@media (max-width: 768px) {
+  .header {
+    font-size: 25px;
+    order: 1;
+  }
+  .wrapper {
+    padding-bottom: 10px;
+  }
+  .box {
+    padding-bottom: 0;
+  }
+}

@@ -49,9 +49,15 @@ function Index() {
             </div>
           ) : (
             <>
-              <Box p={3}>
-                <Grid container justifyContent="space-between" alignItems="center" p={2}>
-                  <h1>Список треков</h1>
+              <Box p={3} className={styles.box}>
+                <Grid
+                  container
+                  justifyContent="space-between"
+                  alignItems="center"
+                  p={2}
+                  className={styles.wrapper}
+                >
+                  <h1 className={styles.header}>Список треков</h1>
                   <Box sx={{ display: "flex", alignItems: "flex-end" }}>
                     <Search sx={{ color: "action.active", mr: 1, my: 0.5 }} />
                     <TextField

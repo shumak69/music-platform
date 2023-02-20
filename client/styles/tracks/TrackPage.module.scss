@@ -58,4 +58,24 @@
 
 .text {
   overflow-wrap: break-word;
+  white-space: break-spaces;
+}
+
+@media (max-width: 768px) {
+  .container {
+    max-width: 100%;
+    flex-basis: 100%;
+  }
+  .info {
+    max-width: 50%;
+  }
+  .trackName {
+    font-size: 28px;
+  }
+  .back {
+    font-size: 25px;
+  }
+  .wrapper {
+    padding-bottom: 130px;
+  }
 }

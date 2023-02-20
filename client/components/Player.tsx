@@ -26,8 +26,8 @@ function Player() {
 
   useEffect(() => {
     function pauseTrackKey(e: KeyboardEvent) {
+      console.log(e.code);
       if (e.code === "Space" && active) {
-        console.log("key");
         e.preventDefault();
         play();
       }
@@ -72,6 +72,9 @@ function Player() {
             audioSettings(trackList[currentTrackIndex + 1]);
             pauseTrack();
             audio.play();
+          } else {
+            playTrack();
+            audio.pause();
           }
         }
       };
@@ -150,16 +153,16 @@ function Player() {
   }
   return (
     <div className={styles.player}>
-      <IconButton onClick={prevTrack}>
+      <IconButton onClick={prevTrack} className={styles.iconButton}>
         <SkipPreviousIcon className={styles.controllerIcon} />
       </IconButton>
-      <IconButton onClick={play}>
+      <IconButton onClick={play} className={styles.iconButton}>
         {pause ? <Pause className={styles.controllerIcon} /> : <PlayArrow className={styles.controllerIcon} />}
       </IconButton>
-      <IconButton onClick={nextTrack}>
+      <IconButton onClick={nextTrack} className={styles.iconButton}>
         <SkipNextIcon className={styles.controllerIcon} />
       </IconButton>
-      <Grid container direction="column" className={trackStyle.container}>
+      <Grid container direction="column" className={styles.container}>
         <div className={styles.trackName}>{active?.name}</div>
         <div className={styles.artist}>{active?.artist}</div>
       </Grid>

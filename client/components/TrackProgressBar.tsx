@@ -11,7 +11,7 @@ interface TrackProgressBarProps {
 function TrackProgressBar({ currentTime, duration, onChange, audio }: TrackProgressBarProps) {
   const ratio = currentTime / duration;
   return (
-    <div className={styles.wrapper}>
+    <div className={[styles.wrapper, audio ? styles.audioWrapper : styles.soundWrapper].join(" ")}>
       <div className={[styles.container, audio ? styles.audioRange : ""].join(" ")}>
         <input type="range" min={0} max={duration} value={currentTime} onChange={onChange} />
         <div
@@ -20,11 +20,11 @@ function TrackProgressBar({ currentTime, duration, onChange, audio }: TrackProgr
         ></div>
       </div>
       {audio ? (
-        <div>
+        <div className={styles.value}>
           {transformToDate(currentTime)} / {transformToDate(duration)}
         </div>
       ) : (
-        <div>
+        <div className={styles.value}>
           {currentTime} / {duration}
         </div>
       )}

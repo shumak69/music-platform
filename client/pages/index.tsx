@@ -7,9 +7,15 @@ function Index() {
   return (
     <MainLayout>
       <div className={styles.center}>
-        <h1>Добро пожаловать в Spofity</h1>
+        <h1 className={styles.header}>Добро пожаловать в Spofity</h1>
         <h3>Здесь собраны лучшие треки!</h3>
-        <Grid justifyContent="space-around" alignItems="center" container marginTop={8}>
+        <Grid
+          justifyContent="space-around"
+          alignItems="center"
+          container
+          marginTop={5}
+          className={styles.buttonContainer}
+        >
           <Button
             variant="contained"
             color="secondary"
