@@ -30,3 +30,17 @@
     margin: 0;
   }
 }
+
+@media (max-width: 576px) {
+  .header {
+    font-size: 29px;
+    text-align: center;
+  }
+  .headerThree {
+    text-align: center;
+    font-size: 24px !important;
+  }
+  .buttonContainer {
+    margin-top: 15px;
+  }
+}

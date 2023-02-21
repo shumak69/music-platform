@@ -26,3 +26,12 @@
     padding-bottom: 0;
   }
 }
+
+@media (max-width: 576px) {
+  .wrapper {
+    padding: 0;
+  }
+  .header {
+    font-size: 20px;
+  }
+}

@@ -8,6 +8,7 @@
   padding: 0 20px 0 10px;
   background-color: rgb(20, 93, 105);
   color: white;
+  z-index: 100;
 }
 
 .volumeUp {
@@ -89,5 +90,11 @@
   }
   .controllerIcon {
     font-size: 44px;
+  }
+}
+
+@media (max-width: 576px) {
+  .repeat {
+    margin-left: 3px;
   }
 }

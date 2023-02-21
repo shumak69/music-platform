@@ -68,9 +68,9 @@ function TrackPage({ serverTrack }: TrackPageProps) {
           Назад
         </Button>
       </Grid>
-      <h1>Слова к треку</h1>
+      <h1 className={styles.textHeader}>Слова к треку</h1>
       <pre className={styles.text}>{track?.text || "Слова отсутствуют"}</pre>
-      <h1>Комментарии</h1>
+      <h2 className={styles.commentHeader}>Комментарии</h2>
       <Grid container className={styles.currentColor}>
         <TextField
           label="Ваше имя"

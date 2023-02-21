@@ -167,8 +167,12 @@ function Player() {
         <div className={styles.artist}>{active?.artist}</div>
       </Grid>
       <TrackProgressBar currentTime={currentTime} duration={duration} onChange={changeCurrentTime} audio />
-      <VolumeUp className={styles.volumeUp} />
-      <TrackProgressBar currentTime={volume} duration={100} onChange={changeVolume} />
+      {window.innerWidth > 576 && (
+        <>
+          <VolumeUp className={styles.volumeUp} />
+          <TrackProgressBar currentTime={volume} duration={100} onChange={changeVolume} />
+        </>
+      )}
       <RepeatIcon className={styles.repeat} onClick={() => setRepeat()} sx={{ color: repeat ? "violet" : "" }} />
     </div>
   );

@@ -68,7 +68,9 @@ function Index() {
                       onChange={search}
                     />
                   </Box>
-                  <Button onClick={() => router.push("/tracks/create")}>Загрузить</Button>
+                  <Button onClick={() => router.push("/tracks/create")} className={styles.loadTrack}>
+                    Загрузить
+                  </Button>
                 </Grid>
 
                 {error && (

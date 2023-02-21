@@ -74,3 +74,15 @@
     font-size: 15px;
   }
 }
+
+@media (max-width: 576px) {
+  .audioWrapper {
+    flex-basis: 86%;
+  }
+  .trackName {
+    font-size: 18px;
+  }
+  .artist {
+    font-size: 16px;
+  }
+}

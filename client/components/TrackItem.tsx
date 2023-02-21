@@ -95,7 +95,9 @@ function TrackItem({ track }: TrackItemProps) {
 
   return (
     <Card className={styles.track} onClick={() => router.push("/tracks/" + track._id)}>
-      <IconButton onClick={play}>{pause && track._id === active?._id ? <Pause /> : <PlayArrow />}</IconButton>
+      <IconButton onClick={play} className={styles.play}>
+        {pause && track._id === active?._id ? <Pause /> : <PlayArrow />}
+      </IconButton>
       <img
         src={"http://localhost:3001/" + track.picture}
         alt={track.name}

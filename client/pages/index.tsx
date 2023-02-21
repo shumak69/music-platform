@@ -8,7 +8,7 @@ function Index() {
     <MainLayout>
       <div className={styles.center}>
         <h1 className={styles.header}>Добро пожаловать в Spofity</h1>
-        <h3>Здесь собраны лучшие треки!</h3>
+        <h3 className={styles.headerThree}>Здесь собраны лучшие треки!</h3>
         <Grid
           justifyContent="space-around"
           alignItems="center"

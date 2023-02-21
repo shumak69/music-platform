@@ -19,7 +19,7 @@ import Typography from "@mui/material/Typography";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import * as React from "react";
-
+import styles from "../styles/NavBar.module.scss";
 const drawerWidth = 240;
 
 const menuItems = [
@@ -138,7 +138,7 @@ export default function NavBar() {
           ))}
         </List>
       </Drawer>
-      <Main open={open}>
+      <Main open={open} className={styles.main}>
         <DrawerHeader />
       </Main>
     </Box>

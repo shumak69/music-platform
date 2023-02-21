@@ -44,4 +44,22 @@
   .box {
     padding-bottom: 0;
   }
+  .loadTrack {
+    flex-basis: 50%;
+    justify-content: flex-end;
+  }
+}
+
+@media (max-width: 576px) {
+  .wrapper {
+    flex-direction: column;
+    padding: 0;
+  }
+  .loadTrack {
+    align-self: end;
+  }
+  .pb {
+    padding-left: 7px;
+    padding-right: 7px;
+  }
 }

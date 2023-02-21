@@ -61,6 +61,11 @@
   white-space: break-spaces;
 }
 
+.username {
+  overflow-wrap: break-word;
+  white-space: break-spaces;
+}
+
 @media (max-width: 768px) {
   .container {
     max-width: 100%;
@@ -77,5 +82,31 @@
   }
   .wrapper {
     padding-bottom: 130px;
+  }
+}
+
+@media (max-width: 576px) {
+  .info {
+    margin-left: 0;
+    width: 100%;
+    text-align: center;
+    max-width: none;
+  }
+  .container {
+    justify-content: center;
+  }
+  .trackName {
+    font-size: 25px;
+  }
+  .back {
+    margin: 0 auto;
+    width: 50%;
+  }
+  .listens {
+    margin: 5px 0;
+  }
+  .textHeader,
+  .commentHeader {
+    font-size: 27px;
   }
 }
