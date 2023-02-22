@@ -1,7 +1,7 @@
 {
   "version": 2,
   "env": {
-      "MONGO_URI": "@shop_api_mongo_uri"
+      "MONGO_URI": "mongodb+srv://admin:admin@cluster0.aqulk4l.mongodb.net/?retryWrites=true&w=majority"
   },
   "builds": [
       {
