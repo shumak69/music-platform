@@ -38,7 +38,7 @@ function TrackItem({ track }: TrackItemProps) {
     e.stopPropagation();
     if (track._id !== active?._id) {
       setActiveTrack(track);
-      audio!.src = "http://localhost:3001/" + track.audio;
+      audio!.src = "https://music-platform-server-aw4a1q1qh-shumak69.vercel.app/" + track.audio;
       console.log(audio);
       // audio?.pause();
       console.log(1);
@@ -99,7 +99,7 @@ function TrackItem({ track }: TrackItemProps) {
         {pause && track._id === active?._id ? <Pause /> : <PlayArrow />}
       </IconButton>
       <img
-        src={"http://localhost:3001/" + track.picture}
+        src={"https://music-platform-server-aw4a1q1qh-shumak69.vercel.app/" + track.picture}
         alt={track.name}
         width={70}
         height={70}

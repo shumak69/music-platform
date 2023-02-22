@@ -39,6 +39,7 @@ function Index() {
       }, 500);
     }
   }, []);
+  console.log(tracks);
   return (
     <MainLayout title="Список треков" className={styles.pb}>
       <Grid container justifyContent="center">

@@ -51,7 +51,7 @@ function Create() {
         formData.append("picture", picture!);
         formData.append("audio", audio!);
         axios
-          .post("http://localhost:3001/tracks", formData)
+          .post("https://music-platform-server-aw4a1q1qh-shumak69.vercel.app/tracks", formData)
           .then((resp) => router.push("/tracks"))
           .catch((e) => console.log(e));
       default:

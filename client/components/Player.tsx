@@ -54,7 +54,7 @@ function Player() {
   useEffect(() => {
     if (active && audio) {
       audio.onended = () => {
-        axios.post("http://localhost:3001/tracks/listen/" + active._id);
+        axios.post("https://music-platform-server-aw4a1q1qh-shumak69.vercel.app/tracks/listen/" + active._id);
         if (repeat) {
           audio.currentTime = 0;
           setCurrentTime(0);
@@ -83,7 +83,7 @@ function Player() {
 
   function audioSettings(active: ITrack) {
     if (active && audio) {
-      audio.src = "http://localhost:3001/" + active.audio;
+      audio.src = "https://music-platform-server-aw4a1q1qh-shumak69.vercel.app/" + active.audio;
       audio.volume = volume / 100;
       audio.onloadedmetadata = () => {
         setDuration(Math.ceil(audio!.duration));

@@ -28,11 +28,14 @@ function TrackPage({ serverTrack }: TrackPageProps) {
     console.log(usernameError, textError);
     if (username.value && text.value) {
       try {
-        const response = await axios.post("http://localhost:3001/tracks/comment", {
-          username: username.value,
-          text: text.value,
-          trackId: track._id,
-        });
+        const response = await axios.post(
+          "https://music-platform-server-aw4a1q1qh-shumak69.vercel.app/tracks/comment",
+          {
+            username: username.value,
+            text: text.value,
+            trackId: track._id,
+          }
+        );
         setTrack({ ...track, comments: [...track.comments, response.data] });
       } catch (error) {
         alert(error);
@@ -50,7 +53,12 @@ function TrackPage({ serverTrack }: TrackPageProps) {
     >
       <Grid justifyContent="space-between" container alignItems="center">
         <Grid container className={styles.container} xs={10} item>
-          <img src={"http://localhost:3001/" + track?.picture} alt={track?.name} width={200} height={200} />
+          <img
+            src={"https://music-platform-server-aw4a1q1qh-shumak69.vercel.app/" + track?.picture}
+            alt={track?.name}
+            width={200}
+            height={200}
+          />
           <div className={styles.info}>
             <h1 className={styles.trackName}>{track?.name}</h1>
             <h2 className={styles.artist}> {track?.artist}</h2>
@@ -112,7 +120,9 @@ export default TrackPage;
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   let response = null;
   try {
-    response = await axios.get<ITrack>("http://localhost:3001/tracks/" + params!.id);
+    response = await axios.get<ITrack>(
+      "https://music-platform-server-aw4a1q1qh-shumak69.vercel.app/tracks/" + params!.id
+    );
   } catch (error) {
     console.error(error);
   }
