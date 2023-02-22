@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, ObjectId, Types } from 'mongoose';
-import { FileService, FileType } from 'src/file/file.service';
+import { FileService, FileType } from '../file/file.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { CreateTrackDto } from './dto/create-track.dto';
 import { Comment, CommentDocument } from './schemas/comment.schema';
